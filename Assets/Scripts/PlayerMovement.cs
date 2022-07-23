@@ -20,7 +20,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float dashingPower = 35f;
     [SerializeField] private float dashingTime = 0.2f;
-    [SerializeField] private BoxCollider2D collide;
+    // [SerializeField] private BoxCollider2D collide;
+    [SerializeField] private CapsuleCollider2D collide;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator anim;
     [SerializeField] private SpriteRenderer sprite;
@@ -53,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
         {
             CoyoteTimeCounter -= Time.deltaTime;
         }
+
         if(Input.GetButtonDown("Jump"))
         {
             JumpBufferCounter = JumpBuffer;
@@ -68,10 +70,9 @@ public class PlayerMovement : MonoBehaviour
             if(!IsGrounded()) { Debug.Log("Coyote timed");}
 
             if(!Input.GetButtonDown("Jump")) { Debug.Log("Jump Buffered");}
-
             rb.velocity = new Vector2(rb.velocity.x,jumpforce);
             JumpBufferCounter = 0f;
-        }
+        } 
 
          if(Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
         {
@@ -141,8 +142,10 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (LowJump - 1) * Time.fixedDeltaTime;
         }
+
+ }
         
-    }
+    
 
     public bool IsGrounded()
     {
